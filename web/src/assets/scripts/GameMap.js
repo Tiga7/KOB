@@ -10,9 +10,10 @@ export class GameMap extends GameObject {
 		this.L = 0;
 
 		this.rows = 13;
-		this.cols = 13;
+		this.cols = 14;
 
-		this.inner_walls_count = 20;
+		this.inner_walls_count = 25;
+
 		this.walls = [];
 	}
 
@@ -54,10 +55,10 @@ export class GameMap extends GameObject {
 			for (let j = 0; j < 1000; j++) {
 				let r = parseInt(Math.random() * this.rows);
 				let c = parseInt(Math.random() * this.cols);
-				if (g[r][c] || g[c][r]) continue;
+				if (g[r][c] || g[this.rows - 1 - r][this.cols - 1 - c]) continue;
 				if ((r == this.rows - 2 && c == 1) || (r == 1 && c == this.cols - 2)) continue;
 
-				g[r][c] = g[c][r] = true;
+				g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
 				break;
 			}
 		}
@@ -68,6 +69,7 @@ export class GameMap extends GameObject {
 		for (let r = 0; r < this.rows; r++) {
 			for (let c = 0; c < this.cols; c++) {
 				if (g[r][c]) {
+					//画墙
 					this.walls.push(new Wall(r, c, this));
 				}
 			}
