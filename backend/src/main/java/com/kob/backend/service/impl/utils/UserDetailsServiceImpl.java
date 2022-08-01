@@ -1,8 +1,8 @@
-package com.kob.backend.service.impl;
+package com.kob.backend.service.impl.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kob.backend.mapper.UserMapper;
-import com.kob.backend.pojo.User;
+import com.kob.backend.pojo.OrdinaryUser;
 import com.kob.backend.service.impl.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,9 +20,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<OrdinaryUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
-        User user = userMapper.selectOne(queryWrapper);
+        OrdinaryUser user = userMapper.selectOne(queryWrapper);
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }

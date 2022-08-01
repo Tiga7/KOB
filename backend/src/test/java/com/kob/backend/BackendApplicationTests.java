@@ -1,6 +1,5 @@
 package com.kob.backend;
 
-import com.kob.backend.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

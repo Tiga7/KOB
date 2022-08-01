@@ -5,6 +5,8 @@ import PkView from "../views/pk/PkView.vue";
 import RankList from "../views/ranklist/RankListView.vue";
 import RecordView from "../views/record/RecordView.vue";
 import UserBot from "../views/user/bot/UserBotView.vue";
+import UserLoginView from "../views/user/account/UserLoginView.vue";
+import UserRegisterView from "../views/user/account/UserRegisterView.vue";
 
 const routes = [
 	{
@@ -33,8 +35,18 @@ const routes = [
 		component: UserBot,
 	},
 	{
+		path: "/user/login/",
+		name: "user_login",
+		component: UserLoginView,
+	},
+	{
+		path: "/user/register/",
+		name: "user_register",
+		component: UserRegisterView,
+	},
+	{
 		path: "/404/",
-		name: "not_found",
+		name: "404",
 		component: NotFound,
 	},
 	{

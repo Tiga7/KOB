@@ -1,12 +1,11 @@
 package com.kob.backend.service.impl.utils;
 
-import com.kob.backend.pojo.User;
+import com.kob.backend.pojo.OrdinaryUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 
@@ -18,7 +17,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private User user;
+    private OrdinaryUser user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -27,7 +26,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //        return encoder.encode(user.getPassword());
         return user.getPassword();
     }
