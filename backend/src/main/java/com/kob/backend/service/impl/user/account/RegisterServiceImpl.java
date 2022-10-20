@@ -1,11 +1,10 @@
-package com.kob.backend.service.impl.user;
+package com.kob.backend.service.impl.user.account;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kob.backend.mapper.UserMapper;
 import com.kob.backend.pojo.OrdinaryUser;
-import com.kob.backend.service.user.RegisterService;
+import com.kob.backend.service.user.account.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +66,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         String encodedPwd = Encoder.encode(password);
-        String photo ="somewhere";
+        String photo = "somewhere";
 
         OrdinaryUser ordinaryUser = new OrdinaryUser(null, username, encodedPwd, photo);
 
@@ -76,7 +75,7 @@ public class RegisterServiceImpl implements RegisterService {
             return map;
         }
 
-        map.put("message", "register successfully");
+        map.put("message", "success");
         return map;
     }
 }

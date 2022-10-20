@@ -7,9 +7,12 @@ export default {
 		photo: "",
 		token: "",
 		is_login: false,
+		pulling_info: true, //是否正在云端获取信息
 	},
 	getters: {},
 	mutations: {
+		//建议放一些同步操作
+		//用mutations 里的函数 用store.commit
 		updateUser(state, user) {
 			state.id = user.id;
 			state.username = user.username;
@@ -26,8 +29,13 @@ export default {
 			state.token = "";
 			state.is_login = false;
 		},
+		upsdatePullingInfo(state, pulling_info) {
+			state.pulling_info = pulling_info;
+		},
 	},
 	actions: {
+		//建议放一些异步操作
+		//用actions 里的函数用store.dispatch
 		login(context, data) {
 			$.ajax({
 				url: "http://localhost:3030/user/token/",
@@ -39,6 +47,7 @@ export default {
 				success(resp) {
 					if (resp.message === "login_success") {
 						//将token存储
+						localStorage.setItem("jwt_token", resp.token);
 						context.commit("updateToken", resp.token);
 						data.success(resp);
 					} else {
@@ -58,6 +67,7 @@ export default {
 					authorization: "Bearer " + context.state.token,
 				},
 				success(resp) {
+					console.log(resp);
 					if (resp.message === "success") {
 						context.commit("updateUser", {
 							...resp,
@@ -74,6 +84,7 @@ export default {
 			});
 		},
 		logout(context) {
+			localStorage.removeItem("jwt_token");
 			context.commit("logout");
 		},
 	},

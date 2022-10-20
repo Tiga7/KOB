@@ -37,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         String[] urls = new String[]{
                 "/user/token/",
                 "/user/register/",
-                "/user/getInfo/"
+                "/user/getInfo/",
+                "/user/bot/*"
         };
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

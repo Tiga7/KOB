@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-@TableName("table_user")
+@TableName("ordinaryuser")
 public class OrdinaryUser {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.AUTO)//主键自增
     private Integer id;
     private String username;
     private String password;

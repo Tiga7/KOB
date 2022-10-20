@@ -1,6 +1,6 @@
 package com.kob.backend.controller.user;
 
-import com.kob.backend.service.user.InfoService;
+import com.kob.backend.service.user.account.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
