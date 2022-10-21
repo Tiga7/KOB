@@ -67,7 +67,6 @@ export default {
 					authorization: "Bearer " + context.state.token,
 				},
 				success(resp) {
-					console.log(resp);
 					if (resp.message === "success") {
 						context.commit("updateUser", {
 							...resp,

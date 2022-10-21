@@ -14,8 +14,7 @@ public class RemoveController {
     private RemoveService removeService;
 
     @RequestMapping("/user/bot/remove")
-    public Map<String,String> removeBot(@RequestParam Map<String,String> data)
-    {
+    public Map<String, String> removeBot(@RequestParam Map<String, String> data) {
         return removeService.removeBot(data);
     }
 }

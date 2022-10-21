@@ -56,6 +56,11 @@ public class UpdateServiceImpl implements UpdateService {
             map.put("message", "bot的描述不能大于300");
             return map;
         }
+        if (content==null || content.length()==0)
+        {
+            map.put("message","代码不能为空");
+            return map;
+        }
         if (content.length() > 10000) {
             map.put("message", "代码长度不能超过10000");
             return map;
