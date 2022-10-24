@@ -32,6 +32,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("Authorization");
 
+        /**
+         * header 设置
+         */
         if (!StringUtils.hasText(token) || !token.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -50,7 +53,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         OrdinaryUser user = userMapper.selectById(Integer.parseInt(userid));
 
         if (user == null) {
-            throw new RuntimeException("用户名未登录");
+            throw new RuntimeException("用户名未注册");
         }
 
         UserDetailsImpl loginUser = new UserDetailsImpl(user);

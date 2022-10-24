@@ -1,13 +1,72 @@
 <template>
-    <PlayGround />
+    <PlayGround v-if="$store.state.pk.status === 'playing'" />
+    <MatchGround v-if="$store.state.pk.status === 'matching'" />
 </template>
 
 <script>
 import PlayGround from './PlayGround.vue'
+import MatchGround from './MathGrount.vue'
+import { onMounted, onUnmounted } from 'vue'
+import { useStore } from 'vuex'
+// import { WebSocket } from 'ws';
+
 export default {
-    components: { PlayGround }
-}
+    components: {
+        PlayGround,
+        MatchGround
+    },
+    setup() {
+        const store = useStore();
+
+        const socketUrl = `ws://localhost:3030/websocket/${store.state.user.token}`;
+
+        let socket = null;
+
+        onMounted(() => {
+
+            store.commit("updateOpponent", {
+                username: "我的对手",
+                photo: "https://img2.baidu.com/it/u=2602524975,4281341375&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400",
+            })
+            socket = new WebSocket(socketUrl);
+
+
+            socket.onopen = () => {
+                store.commit("updateSocket", socket);
+                console.log("建立连接");
+            }
+
+            socket.onmessage = (msg) => {
+                const data = JSON.parse(msg.data);
+                // console.log(data);
+                if (data.event === "start-matching") {
+                    store.commit("updateOpponent", {
+                        username: data.opponent_username,
+                        photo: data.opponent_photo,
+                    })
+                    setTimeout(() => {
+                        store.commit("updateStatus", "playing");
+                    }, 2000);
+
+                    store.commit("updateGamemap", data.game_map)
+                }
+
+
+            }
+
+            socket.onclose = () => {
+                console.log("断开连接");
+            }
+        });
+
+        onUnmounted(() => {
+            socket.close();
+            store.commit("updateStatus", "matching");
+        });
+    }
+}   
 </script>
 
 <style scoped>
+
 </style>
