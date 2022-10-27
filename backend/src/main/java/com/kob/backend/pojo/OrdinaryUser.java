@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-@TableName("ordinaryuser")
+@TableName("ordinary_user")
 public class OrdinaryUser {
 
     @TableId(type = IdType.AUTO)//主键自增
