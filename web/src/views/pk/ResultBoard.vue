@@ -33,6 +33,11 @@ export default {
         const restart = () => {
             store.commit("updateStatus", "matching");
             store.commit("updateLoser", "none");
+            store.commit("updateOpponent", {
+                username: "我的对手",
+                photo: "https://img2.baidu.com/it/u=2602524975,4281341375&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400",
+            })
+
         }
         return {
             restart

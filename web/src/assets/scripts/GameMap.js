@@ -19,24 +19,8 @@ export class GameMap extends GameObject {
 		this.walls = [];
 	}
 
-	check_connectivity(g, sx, sy, tx, ty) {
-		if (sx == tx && sy == ty) return true;
-		g[sx][sy] = true;
-
-		let dx = [-1, 0, 1, 0],
-			dy = [0, 1, 0, -1];
-		for (let i = 0; i < 4; i++) {
-			let x = sx + dx[i],
-				y = sy + dy[i];
-			if (!g[x][y] && this.check_connectivity(g, x, y, tx, ty)) return true;
-		}
-
-		return false;
-	}
-
 	create_walls() {
 		const g = this.store.state.pk.gamemap;
-		console.log(g);
 		for (let r = 0; r < this.rows; r++) {
 			for (let c = 0; c < this.cols; c++) {
 				if (g[r][c]) {
@@ -45,8 +29,28 @@ export class GameMap extends GameObject {
 				}
 			}
 		}
-
 		return true;
+	}
+
+	add_listening_events() {
+		this.ctx.canvas.focus();
+
+		this.ctx.canvas.addEventListener("keydown", (e) => {
+			let d = -1;
+			if (e.key === "w") d = 0;
+			else if (e.key === "d") d = 1;
+			else if (e.key === "s") d = 2;
+			else if (e.key === "a") d = 3;
+
+			if (d >= 0) {
+				this.store.state.pk.socket.send(
+					JSON.stringify({
+						event: "move",
+						direction: d,
+					})
+				);
+			}
+		});
 	}
 
 	start() {
