@@ -31,22 +31,6 @@ export default {
         //     }
         // })
 
-        // $.ajax({
-        //     url: "http://localhost:3030/user/register/",
-        //     type: "post",
-        //     data: {
-        //         username: "",
-        //         password: "",
-        //         confirmedPwd: ""
-        //     },
-        //     success(resp) {
-        //         console.log(resp);
-        //     },
-        //     error(resp) {
-        //         console.log(resp)
-        //     }
-        // })
-
     }
 
 

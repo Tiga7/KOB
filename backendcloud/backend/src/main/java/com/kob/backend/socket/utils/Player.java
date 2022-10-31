@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Player {
     private Integer id;
+    private Integer botId;//-1代表人操作 否则表示AI操作
+    private String botCode;
     private Integer sx;
     private Integer sy;
     /**

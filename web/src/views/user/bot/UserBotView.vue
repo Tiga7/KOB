@@ -77,18 +77,18 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in bots" :key="item.id">
-                                    <td>{{ index+1 }}</td>
+                                    <td>{{ index + 1 }}</td>
                                     <td>{{ item.title }}</td>
                                     <td>{{ item.description }}</td>
                                     <td>{{ item.createTime }}</td>
                                     <td>
                                         <button type="button" class="btn btn-secondary" style="margin-right:10px;"
-                                            data-bs-toggle="modal" :data-bs-target="'#update-bot-btn-'+item.id">
+                                            data-bs-toggle="modal" :data-bs-target="'#update-bot-btn-' + item.id">
                                             修改
                                         </button>
 
                                         <!-- update bot Modal -->
-                                        <div class="modal fade" :id="'update-bot-btn-'+item.id"
+                                        <div class="modal fade" :id="'update-bot-btn-' + item.id"
                                             data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
@@ -216,10 +216,22 @@ export default {
                 },
                 success(resp) {
                     bots.value = resp;
+                    console.log(resp);
                 },
                 error() {
                 }
             })
+
+            // axios({
+            //     url: "http://localhost:3030/user/bot/botlist",
+            //     method: "get",
+            //     headers: {
+            //         authorization: "Bearer " + store.state.user.token,
+            //     },
+            // }).then(resp => {
+            //     bots.value = resp.data;
+            //     console.log(resp);
+            // })
         }
         refresh_bot();
 

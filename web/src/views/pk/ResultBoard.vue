@@ -14,6 +14,7 @@
         <div class=" result-board-text" v-else>
             我们是冠军
         </div>
+
         <div class="result-board-btn">
             <button type="button" class="btn btn-primary btn-lg" @click="restart">
                 再来一把!
