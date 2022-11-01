@@ -4,6 +4,8 @@ import NotFound from "../views/error/NotFound.vue";
 import PkView from "../views/pk/PkView.vue";
 import RankList from "../views/ranklist/RankListView.vue";
 import RecordView from "../views/record/RecordView.vue";
+import RecordStepView from "../views/record/RecordStepView.vue";
+
 import UserBot from "../views/user/bot/UserBotView.vue";
 
 import UserLoginView from "../views/user/account/UserLoginView.vue";
@@ -49,6 +51,14 @@ const routes = [
 		path: "/record/",
 		name: "record_index",
 		component: RecordView,
+		meta: {
+			requestAuth: true,
+		},
+	},
+	{
+		path: "/record/:recordId/",
+		name: "record_steps",
+		component: RecordStepView,
 		meta: {
 			requestAuth: true,
 		},

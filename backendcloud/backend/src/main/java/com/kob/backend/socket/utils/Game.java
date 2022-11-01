@@ -1,8 +1,10 @@
 package com.kob.backend.socket.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.kob.backend.mapper.UserMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.BotRecord;
+import com.kob.backend.pojo.OrdinaryUser;
 import com.kob.backend.socket.WebSocketServer;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -299,8 +301,29 @@ public class Game extends Thread {
         }
         return res.toString();
     }
+    private void updateRating(Player player,Integer rating)
+    {
+        OrdinaryUser user = WebSocketServer.userMapper.selectById(player.getId());
+        user.setRating(rating);
+        WebSocketServer.userMapper.updateById(user);
+    }
 
     private void saveRecordToDB() {
+        Integer ratingA = WebSocketServer.userMapper.selectById(playerA.getId()).getRating();
+        Integer ratingB = WebSocketServer.userMapper.selectById(playerB.getId()).getRating();
+
+        loser = "A";
+        if ("A".equals(loser))
+        {
+            ratingA-=5;
+            ratingB+=4;
+        }else if ("B".equals(loser))
+        {
+            ratingB-=5;
+            ratingA+=4;
+        }
+        updateRating(playerA,ratingA);
+        updateRating(playerB,ratingB);
         BotRecord botRecord = new BotRecord(
                 null,
                 playerA.getId(),

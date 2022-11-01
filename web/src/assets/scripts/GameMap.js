@@ -33,24 +33,31 @@ export class GameMap extends GameObject {
 	}
 
 	add_listening_events() {
-		this.ctx.canvas.focus();
+		if (this.store.state.record.is_record) {
+			let k = 0;
+			k;
+			const interval_id = setInterval(() => {}, 300);
+			clearInterval(interval_id);
+		} else {
+			this.ctx.canvas.focus();
 
-		this.ctx.canvas.addEventListener("keydown", (e) => {
-			let d = -1;
-			if (e.key === "w") d = 0;
-			else if (e.key === "d") d = 1;
-			else if (e.key === "s") d = 2;
-			else if (e.key === "a") d = 3;
+			this.ctx.canvas.addEventListener("keydown", (e) => {
+				let d = -1;
+				if (e.key === "w") d = 0;
+				else if (e.key === "d") d = 1;
+				else if (e.key === "s") d = 2;
+				else if (e.key === "a") d = 3;
 
-			if (d >= 0) {
-				this.store.state.pk.socket.send(
-					JSON.stringify({
-						event: "move",
-						direction: d,
-					})
-				);
-			}
-		});
+				if (d >= 0) {
+					this.store.state.pk.socket.send(
+						JSON.stringify({
+							event: "move",
+							direction: d,
+						})
+					);
+				}
+			});
+		}
 	}
 
 	start() {

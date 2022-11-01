@@ -37,7 +37,7 @@ public class WebSocketServer {
 
     //不是spring的单例模式 不能直接注入
 
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
 
     public static BotRecordMapper botRecordMapper;
 

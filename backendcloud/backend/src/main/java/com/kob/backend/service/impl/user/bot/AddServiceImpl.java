@@ -1,5 +1,6 @@
 package com.kob.backend.service.impl.user.bot;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.OrdinaryUser;
@@ -27,49 +28,54 @@ public class AddServiceImpl implements AddService {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        var loginUser = (UserDetailsImpl)authenticationToken.getPrincipal();
-        OrdinaryUser user =loginUser.getUser();
+        var loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
+        OrdinaryUser user = loginUser.getUser();
 
         String title = data.get("title");
         String description = data.get("description");
         String content = data.get("content");
 
-        Map<String,String> map =new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-        if (title==null||title.length()==0){
-            map.put("message","标题不能为空");
-            return map;
-        }
-
-        if (title.length()>100){
-            map.put("message","标题长度不能超过100");
+        if (title == null || title.length() == 0) {
+            map.put("message", "标题不能为空");
             return map;
         }
 
-        if(description==null||description.length()==0)
-        {
-            description="这个用户很懒,没有留下描述~";
-        }
-        if (description.length()>300)
-        {
-            map.put("message","bot的描述不能大于300");
-            return map;
-        }
-        if (content==null || content.length()==0){
-            map.put("message","代码不能为空");
-            return map;
-        }
-        if (content.length()>10000){
-            map.put("message","代码长度不能超过10000");
+        if (title.length() > 100) {
+            map.put("message", "标题长度不能超过100");
             return map;
         }
 
-        Date now =new Date();
-        Bot bot = new Bot(null,user.getId(),title,description,content,now,now);
+        if (description == null || description.length() == 0) {
+            description = "这个用户很懒,没有留下描述~";
+        }
+        if (description.length() > 300) {
+            map.put("message", "bot的描述不能大于300");
+            return map;
+        }
+        if (content == null || content.length() == 0) {
+            map.put("message", "代码不能为空");
+            return map;
+        }
+        if (content.length() > 10000) {
+            map.put("message", "代码长度不能超过10000");
+            return map;
+        }
+
+        QueryWrapper<Bot> queryWrapper= new QueryWrapper<>();
+        queryWrapper.eq("user_id",user.getId());
+        if (botMapper.selectCount(queryWrapper) >= 10) {
+            map.put("message", "最多只能创建10个Bot");
+            return map;
+        }
+
+        Date now = new Date();
+        Bot bot = new Bot(null, user.getId(), title, description, content, now, now);
 
         botMapper.insert(bot);
 
-        map.put("message","添加Bot成功");
+        map.put("message", "添加Bot成功");
         return map;
     }
 }
